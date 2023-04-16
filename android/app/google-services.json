@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "778344789663",
+    "project_id": "my-caterers",
+    "storage_bucket": "my-caterers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778344789663:android:10ba8ec702fb0c5a3514aa",
+        "android_client_info": {
+          "package_name": "com.ak.mycaterers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778344789663-sr02vpn4d41ibak8v4evaiodbl61la6c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEAF9gWLYlr6xxDWZtJRVMfqB1e060VZI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778344789663-sr02vpn4d41ibak8v4evaiodbl61la6c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
