@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mycaterers/utils/common/colors.dart';
 import 'package:mycaterers/utils/common/utils.dart';
 import 'package:mycaterers/utils/routes/routenames.dart';
@@ -18,10 +20,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MultiProvider(
-    child:  MyApp(),
-    providers: Utils.providerList,
-  ));
+  runApp(
+   MyApp(),
+
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
 
@@ -47,10 +49,20 @@ class MyApp extends StatelessWidget {
       fontFamily: 'Rubik',
         appBarTheme: AppBarTheme(
           backgroundColor: korangeColor
-        )
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+
+          backgroundColor: korangeAccent,
+          foregroundColor: Colors.white,
+
+        ),
+
       ),
-      initialRoute: RouteNames.home,
-      onGenerateRoute: Routes().getRoute ,
+
+      initialRoute:  FirebaseAuth.instance.currentUser != null ?  RouteNames.home : RouteNames.login,
+
+      routes: Routes().getRoute ,
+
 
 
 

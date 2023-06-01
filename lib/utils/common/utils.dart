@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mycaterers/controllers/authcontroller.dart';
 import 'package:mycaterers/controllers/ordersController.dart';
+import 'package:open_whatsapp/open_whatsapp.dart';
 import 'package:provider/provider.dart';
 
 import 'colors.dart';
 
 class Utils {
 
-  static List<ChangeNotifierProvider> providerList = [
-    ChangeNotifierProvider<AuthProvider>(
-        create: (BuildContext context) => AuthProvider()),
-    ChangeNotifierProvider<OrderProvider>(
-        create: (BuildContext context) => OrderProvider()),
-  ];
+
 
   static navigate(String route,BuildContext context){
     Navigator.of(context).pushNamed(route);
@@ -39,7 +35,7 @@ class Utils {
       textInputAction: TextInputAction.next,
       keyboardType: keyboard,
       minLines: 1,//Normal textInputField will be displayed
-      maxLines: maxLine ,// w
+      maxLines: obsecure ? 1 : maxLine ,// w
       decoration: InputDecoration(
         suffix: suffix,
         labelText: label,
@@ -94,6 +90,31 @@ class Utils {
         ));
   }
 
+  static circularGreenButton(
+      {required void Function()? onPressed, required String label}) {
+    return ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+            overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                  (Set<MaterialState> states) {
+                if (states.contains(MaterialState.pressed))
+                  return Colors.greenAccent; //<-- SEE HERE
+                return null; // Defer to the widget's default.
+              },
+            ),
+            backgroundColor: MaterialStateProperty.all(kgreen),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20)
+            ))
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          child: Text(label,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+        ));
+
+
+  }
+
 
   static buttonGreen(String title,onPress){
     return ElevatedButton(
@@ -103,6 +124,16 @@ class Utils {
           backgroundColor: MaterialStateProperty.all(kgreen)),
     );
   }
+
+  static whatsappButton({String? name,String? number}) {
+    return ElevatedButton(onPressed: (){
+      FlutterOpenWhatsapp.sendSingleMessage("919653137263", "Hello this is ${name} My registered number is ${number}");
+
+    }, child: Text('📞 Whatsapp us'),style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(kgreen)
+    ),);
+  }
+
 
 
 

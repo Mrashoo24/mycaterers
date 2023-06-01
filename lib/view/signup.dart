@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:mycaterers/controllers/authcontroller.dart';
 import 'package:mycaterers/repositary/authrepo.dart';
 import 'package:mycaterers/utils/common/colors.dart';
@@ -27,22 +28,23 @@ class _SignupState extends State<Signup> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  var formKey =  GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
 
   var selectedCountry = '';
   var selectedState = '';
   var selectedCity = '';
 
-
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusnode = FocusNode();
 
-  late AuthProvider authProvider ;
-
+  late AuthController authProvider;
 
   @override
   Widget build(BuildContext context) {
-   authProvider = Provider.of<AuthProvider>(context, listen: false);
+    // authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    authProvider = Get.put(AuthController());
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -63,7 +65,6 @@ class _SignupState extends State<Signup> {
                   fit: BoxFit.fill,
                 ),
               ),
-
               Align(
                 alignment: Alignment.center,
                 child: SingleChildScrollView(
@@ -73,7 +74,13 @@ class _SignupState extends State<Signup> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(30.0),
-                          child: Text('Signup',style: TextStyle(color: korangeColor,fontSize: 40,fontWeight: FontWeight.bold),),
+                          child: Text(
+                            'Signup',
+                            style: TextStyle(
+                                color: korangeColor,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 32),
@@ -81,61 +88,78 @@ class _SignupState extends State<Signup> {
                               controller: loginController,
                               focusnode: emailFocusNode,
                               onChange: (value) {},
-                              onSubmit: (value) {}, hint: 'Enter Email id', label: 'Email id', obsecure: false, validator: (value) {
-                            if(value!.isEmpty){
-                              return 'Email cannot be blank';
-                            }
-                            if(!value.contains('@')){
-                              return 'Input Correct Email id';
-                            }
-
-                          }),
+                              onSubmit: (value) {},
+                              hint: 'Enter Email id',
+                              label: 'Email id',
+                              obsecure: false,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Email cannot be blank';
+                                }
+                                if (!value.contains('@')) {
+                                  return 'Input Correct Email id';
+                                }
+                              }),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 32,vertical:15),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 15),
                           child: Utils.circularTextField(
                               controller: passwordController,
                               focusnode: passwordFocusnode,
                               onChange: (value) {},
-                              onSubmit: (value) {}, hint: 'Enter 6 digit Password', label: 'Password', obsecure: true, validator: (value) {
-                            if(value!.isEmpty){
-                              return 'Password cannot be blank';
-                            }
-                            if(value.length < 6){
-                              return 'Password must be atleast 6 characters long';
-                            }
-                          }),
+                              onSubmit: (value) {},
+                              hint: 'Enter 6 digit Password',
+                              label: 'Password',
+                              obsecure: true,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Password cannot be blank';
+                                }
+                                if (value.length < 6) {
+                                  return 'Password must be atleast 6 characters long';
+                                }
+                              }),
                         ),
 
                         Padding(
-                          padding: EdgeInsets.only(right: 32,left:32,bottom:15),
+                          padding:
+                              EdgeInsets.only(right: 32, left: 32, bottom: 15),
                           child: Utils.circularTextField(
                               controller: nameController,
                               onChange: (value) {},
-                              onSubmit: (value) {}, hint: 'Full Name', label: 'Full name', obsecure: false, validator: (value) {
-                            if(value!.isEmpty){
-                              return 'Name cannot be blank';
-                            }
-
-                          }),
+                              onSubmit: (value) {},
+                              hint: 'Full Name',
+                              label: 'Full name',
+                              obsecure: false,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Name cannot be blank';
+                                }
+                              }),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 32,right: 32,bottom: 15),
+                          padding:
+                              EdgeInsets.only(left: 32, right: 32, bottom: 15),
                           child: Utils.circularTextField(
-                            keyboard: TextInputType.phone,
+                              keyboard: TextInputType.phone,
                               controller: phoneController,
                               onChange: (value) {},
-                              onSubmit: (value) {}, hint: 'Phone Number', label: 'Phone Number', obsecure: false, validator: (value) {
-                            if(value!.isEmpty){
-                              return 'Phone cannot be blank';
-                            }
-                            if(value.length != 10){
-                              return 'Phone must be 10 characters';
-                            }
-                           if (double.parse(value,(e) => 0).isNaN == 0){
-                             return 'Phone must be number';
-                           }
-                          }),
+                              onSubmit: (value) {},
+                              hint: 'Phone Number',
+                              label: 'Phone Number',
+                              obsecure: false,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Phone cannot be blank';
+                                }
+                                if (value.length != 10) {
+                                  return 'Phone must be 10 characters';
+                                }
+                                if (double.parse(value, (e) => 0).isNaN == 0) {
+                                  return 'Phone must be number';
+                                }
+                              }),
                         ),
 
                         ///Country state
@@ -148,12 +172,12 @@ class _SignupState extends State<Signup> {
                                 selectedCountry = value;
                               });
                             },
-                            onStateChanged:(value) {
+                            onStateChanged: (value) {
                               setState(() {
                                 selectedState = value;
                               });
                             },
-                            onCityChanged:(value) {
+                            onCityChanged: (value) {
                               setState(() {
                                 selectedCity = value;
                               });
@@ -165,33 +189,49 @@ class _SignupState extends State<Signup> {
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 32),
                           width: ResponsiveDimensions.getHeigth(context).width,
-                          child: Utils.circularOrangeButton(onPressed: () async {
-                            if(selectedState.isEmpty || selectedCity.isEmpty || selectedCountry.isEmpty){
-                              Utils.showErrorToast('All fields are required');
-                            }
+                          child: Utils.circularOrangeButton(
+                              onPressed: () async {
+                                if (selectedState.isEmpty ||
+                                    selectedCity.isEmpty ||
+                                    selectedCountry.isEmpty) {
+                                  Utils.showErrorToast(
+                                      'All fields are required');
+                                }
 
-                            if(CommonFunctions.validateForm(formKey)){
-
-                              AuthProvider().userSignup(UserModel(loginController.text, passwordController.text, phoneController.text, selectedCountry, selectedState, selectedState, '', []));
-
-                            }
-                          }, label: 'Signup'),
+                                if (CommonFunctions.validateForm(formKey)) {
+                                  AuthController().userSignup(UserModel(
+                                      loginController.text,
+                                      passwordController.text,
+                                      phoneController.text,
+                                      selectedCountry,
+                                      selectedState,
+                                      selectedState,
+                                      '', []));
+                                }
+                              },
+                              label: 'Signup'),
                         ),
 
-                        SizedBox(height: 15,),
+                        SizedBox(
+                          height: 15,
+                        ),
 
                         RichText(
-                          text:   TextSpan(
-                          text: 'Already have an account? ',
-                          style: TextStyle(color: korangeColor),
-                          children: const <TextSpan>[
-                            TextSpan(
-                                text: ' Login', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
-                          ],
+                          text: TextSpan(
+                            text: 'Already have an account? ',
+                            style: TextStyle(color: korangeColor),
+                            children: const <TextSpan>[
+                              TextSpan(
+                                  text: ' Login',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18)),
+                            ],
+                          ),
                         ),
+                        SizedBox(
+                          height: 100,
                         ),
-                        SizedBox(height: 100,),
-
                       ],
                     ),
                   ),

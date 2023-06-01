@@ -1,6 +1,8 @@
-class FoodModel {
+import 'package:equatable/equatable.dart';
+
+class FoodModel extends Equatable {
   String? name;
-  String? catid;
+  List<dynamic>? catid;
   String? id;
 
 
@@ -25,4 +27,10 @@ class FoodModel {
 
     return data;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [ name,
+   catid,
+   id];
 }

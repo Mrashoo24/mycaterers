@@ -2,67 +2,80 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'foodModel.dart';
+
 class OrderModel {
   String? id;
   String? uid;
   String? datetime;
-  String? foodlist;
+  String? pincode;
   String? area;
-  List<VendorQouteModel>? vendors;
-  List? eventDate;
-
-
-
-  OrderModel({this.id, this.uid, this.datetime, this.foodlist, this.area, this.eventDate,this.vendors});
-
-
-  factory OrderModel.fromJson(Map<String,dynamic> data){
-    return OrderModel(id:data['id'],uid: data['uid'],
-       datetime: data['datetime'],foodlist: data['foodlist'], area: data['area'], eventDate: data['eventDate']
-    ,vendors: data['vendors'].map((e) => VendorQouteModel.fromJson(e))
-    );
-  }
-
-  toJson(){
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-
-
-    data['emailid'] = this.id;
-    data['password'] = this.uid;
-    data['phone'] = this.datetime;
-    data['country'] = this.foodlist;
-    data['state'] = this.area;
-    data['city'] = this.eventDate;
-
-    return data;
-  }
-
-}
-
-class VendorQouteModel {
-  String? name;
+  String? eventDate;
+  String? notes;
+  String? personCount;
+  String? type;
   String? amount;
-  String? id;
+  bool? approved;
+  String? vendor;
+  String? status;
+  List<FoodModel>? listoffoods;
 
 
-  VendorQouteModel({this.id, this.name, this.amount,});
+  OrderModel(
+      {this.id,
+      this.uid,
+      this.datetime,
+      this.area,
+      this.eventDate,this.pincode,this.notes,this.listoffoods,this.type,this.personCount
+     ,this.amount,this.approved,this.vendor,this.status
+      });
+
+  factory OrderModel.fromJson(Map<String, dynamic> data) {
+
+    List<FoodModel> foodList = (data['listoffoods'] as List<dynamic>)
+        .map((e) => FoodModel.fromJson(e))
+        .toList();
+
+    return OrderModel(
+        id: data['id'],
+        uid: data['uid'],
+        datetime: data['datetime'],
+        area: data['area'],
+        pincode: data['date'],
+        eventDate: data['eventDate'],
+        notes :data['notes'],
+        personCount: data['personCount'],
+        type :data['type'],
+        listoffoods : foodList,
+      amount: data['approvedAmount'],
+      approved :data['approved'],
+      vendor :data['approvedVendor'],
+      status: data['status']
 
 
-  factory VendorQouteModel.fromJson(Map<String,dynamic> data){
-    return VendorQouteModel(id:data['id'],name: data['name'],
-        amount: data['amount']
     );
   }
 
-  toJson(){
+  toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
-
-    data['name'] = this.name;
     data['id'] = this.id;
-    data['amount'] = this.amount;
+    data['uid'] = this.uid;
+    data['datetime'] = this.datetime;
+    data['area'] = this.area;
+    data['eventDate'] = this.eventDate;
+    data['notes'] = this.notes;
+    data['pincode'] = this.pincode;
+    data['type'] = this.type;
+    data['personCount'] = this.personCount;
+    data['approvedAmount'] = this.amount;
+    data['approved'] = this.approved;
+    data['approvedVendor'] = this.vendor;
+    data['status'] = this.status;
 
+    data['listoffoods'] = this.listoffoods!.map((e) => e.toJson()).toList();
 
     return data;
   }
 }
+

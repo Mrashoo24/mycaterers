@@ -11,25 +11,13 @@ import '../../view/foodSelectScreen.dart';
 
 class Routes {
 
-  Route<dynamic> getRoute(RouteSettings routeSettings){
-    switch(routeSettings.name){
-      case RouteNames.login :
-        return MaterialPageRoute(builder: (context) => LoginPage() );
-      case RouteNames.home :
-        return MaterialPageRoute(builder: (context) => HomePage() );
-      case RouteNames.signup :
-        return MaterialPageRoute(builder: (context) => Signup() );
-      case RouteNames.vendorDetails :
-        return MaterialPageRoute(builder: (context) => VendorDetails() );
+  var getRoute =
+  {
+    RouteNames.login: (context) => LoginPage(),
+    RouteNames.home: (context) => HomePage(),
+    RouteNames.signup: (context) => Signup(),
+    RouteNames.vendorDetails: (context) => VendorDetails(),
 
-      case RouteNames.foodListScreen :
-        return MaterialPageRoute(builder: (context) => FoodSelectScreen() );
-      default :
-        return MaterialPageRoute(builder: (context) => Scaffold(
-          body: Container(child: Center(child: Text("NO ROUTES FOUND"),),),
-        ) );
-
-    }
-  }
-
+    RouteNames.foodListScreen: (context) => FoodSelectScreen()
+  };
 }
