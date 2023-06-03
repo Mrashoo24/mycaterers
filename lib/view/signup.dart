@@ -206,7 +206,7 @@ class _SignupState extends State<Signup> {
                                       selectedCountry,
                                       selectedState,
                                       selectedState,
-                                      '', []));
+                                      '', [],nameController.text));
                                 }
                               },
                               label: 'Signup'),

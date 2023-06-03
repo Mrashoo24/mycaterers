@@ -21,6 +21,7 @@ class _QouteFoodDetailsState extends State<QouteFoodDetails> {
 
     return Scaffold(
       body: GetBuilder<OrderController>(
+        init: Get.put(OrderController()),
         builder: (orderController) {
 
           var selectedCatList = widget.listoffoods!

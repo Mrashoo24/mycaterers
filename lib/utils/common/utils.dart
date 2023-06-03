@@ -4,6 +4,7 @@ import 'package:mycaterers/controllers/authcontroller.dart';
 import 'package:mycaterers/controllers/ordersController.dart';
 import 'package:open_whatsapp/open_whatsapp.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'colors.dart';
 
@@ -126,10 +127,15 @@ class Utils {
   }
 
   static whatsappButton({String? name,String? number}) {
-    return ElevatedButton(onPressed: (){
-      FlutterOpenWhatsapp.sendSingleMessage("919653137263", "Hello this is ${name} My registered number is ${number}");
+    return ElevatedButton(onPressed: () async {
+      FlutterOpenWhatsapp.sendSingleMessage("919653137263", "Hello this is  My registered number is ${number}");
+      // var whatsappUrl =
+      //     // "whatsapp://send?phone=+919653137263&text=Hello this is  My registered number ${number}";
+      // 'whatsapp://send?phone=+919653137263&text=Hello this is  My registered number ${number}';
+      //  await canLaunchUrl(Uri.parse('tel:9653137263'))? launchUrl(Uri.parse('tel:9653137263')):print("open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
+      //
 
-    }, child: Text('📞 Whatsapp us'),style: ButtonStyle(
+      }, child: Text('📞 Whatsapp us'),style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(kgreen)
     ),);
   }

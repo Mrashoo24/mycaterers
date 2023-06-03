@@ -80,5 +80,7 @@ class AuthRepo {
     }
   }
   
-
+  logout() async {
+   return await fireAuth.signOut();
+  }
 }

@@ -576,13 +576,13 @@ class _FoodSelectScreenState extends State<FoodSelectScreen> {
                           )
                       ],
                     ),
-                    floatingActionButton: FloatingActionButton(onPressed: () {
-                      setState(() {
-                        _scrollController.animateTo(2 * 60.0,
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease);
-                      });
-                    }),
+                    // floatingActionButton: FloatingActionButton(onPressed: () {
+                    //   setState(() {
+                    //     _scrollController.animateTo(2 * 60.0,
+                    //         duration: Duration(milliseconds: 500),
+                    //         curve: Curves.ease);
+                    //   });
+                    // }),
                     body: Column(
                       children: [
                         Align(

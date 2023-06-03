@@ -54,7 +54,7 @@ class AuthController extends GetxController{
       update();
 
       Utils.showSuccesstoast('User Created');
-      Get.toNamed(RouteNames.home);
+      Get.offAllNamed(RouteNames.home);
 
     }else{
 
@@ -79,12 +79,23 @@ class AuthController extends GetxController{
       update();
 
       Utils.showSuccesstoast('Logged in');
-      Get.toNamed(RouteNames.home);
+      Get.offAllNamed(RouteNames.home);
 
     }else{
 
     }
   }
+
+
+  userLogout() async {
+    await AuthRepo().logout();
+    var pref= await SharedPreferences.getInstance();
+    pref.clear();
+    Get.offAllNamed(RouteNames.login);
+    Get.reset();
+
+  }
+
   @override
   void onInit() {
 

@@ -14,12 +14,12 @@ class UserModel {
    List? token;
 
 
-  UserModel(this.emailid, this.password, this.phone, this.country, this.state, this.city, this.uid, this.token, {this.name});
+  UserModel(this.emailid, this.password, this.phone, this.country, this.state, this.city, this.uid, this.token,this.name);
 
 
   factory UserModel.fromJson(Map<String,dynamic> data){
     return UserModel(data['emailid'], data['password'],
-        data['phone'], data['country'], data['state'], data['city'], data['uid'], data['token']);
+        data['phone'], data['country'], data['state'], data['city'], data['uid'], data['token'],data['name']);
   }
 
   toJson(){
@@ -34,6 +34,7 @@ class UserModel {
     data['city'] = this.city;
     data['uid'] = this.uid;
     data['token'] = this.token;
+    data['name'] = this.name;
 
     return data;
   }

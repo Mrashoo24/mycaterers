@@ -55,6 +55,8 @@ dependencies:
   flutter_rating_stars: ^1.0.3+4
   open_whatsapp: ^0.0.1
   shared_preferences: ^2.1.1
+  url_launcher: ^6.1.10
+  package_info_plus: ^4.0.2
 
 
 

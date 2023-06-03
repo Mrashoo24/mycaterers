@@ -9,10 +9,12 @@ import 'package:mycaterers/data/model/vendorEnquiryModel.dart';
 import 'package:mycaterers/data/model/vendorModel.dart';
 import 'package:mycaterers/utils/common/commonfunctions.dart';
 import 'package:mycaterers/utils/common/utils.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../data/model/CategoryMode.dart';
 import '../data/model/foodModel.dart';
 import '../data/model/typemodel.dart';
+import '../utils/common/appversion.dart';
 
 class OrderController extends GetxController {
   var formKey = GlobalKey<FormState>();
@@ -53,6 +55,8 @@ class OrderController extends GetxController {
 
   List<CategoryModel> selectedCatList = [];
 
+  PackageInfo? packageinfo ;
+
   @override
   void onInit() {
     getFilterList();
@@ -62,7 +66,16 @@ print('checkui = ${authController.userModel}');
       ordersList.bindStream(lista());
     }
 
+    getAppVersion();
+
+
     super.onInit();
+  }
+
+  getAppVersion() async {
+    packageinfo = await Appversions().getAppVersion();
+    print('getVersion ${packageinfo!.version}');
+    update();
   }
 
   changeSelectedOrder(OrderModel order){

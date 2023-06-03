@@ -86,11 +86,78 @@ buildQouteCard(
                 SizedBox(
                   height: 8,
                 ),
+                selectedOrder.status == 'Completed'
+                    ?
+
+                FutureBuilder<VendorModel>(
+          future:orderController.getVendor(selectedOrder.vendor),
+            builder: (context, snapshot) {
+              if(!snapshot.hasData){
+                return SizedBox();
+              }
+
+              VendorModel vendorModel = snapshot.requireData;
+
+              return Text('ORDER COMPLETED BY ${vendorModel.name} at Rs.${selectedOrder.amount}');
+            }
+        )
+                    :
+                selectedOrder.status == 'Scheduled'
+                    ?
+
+                FutureBuilder<VendorModel>(
+                    future:orderController.getVendor(selectedOrder.vendor),
+                    builder: (context, snapshot) {
+                      if(!snapshot.hasData){
+                        return SizedBox();
+                      }
+
+                      VendorModel vendorModel = snapshot.requireData;
+
+                      return Text('ORDER CONFIRMED BY ${vendorModel.name} at Rs.${selectedOrder.amount} on ${selectedOrder.eventDate}\nFor any query whatsapp or call us');
+                    }
+                ) :
+
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                actions: [
+                                  Utils.circularGreenButton(
+                                      onPressed: () {
+                                        CommonFunctions().updateFirebaseDoc(collectionName: 'enquiry', data: {
+                                          'status' : 'Cancelled'
+                                        }, successMessage: '', docid: selectedOrder.id!);
+                                        Get.back();
+                                        Utils.showSuccesstoast('Order Cancelled');
+
+                                      },
+                                      label: 'Yes'),
+                                  Utils.circularOrangeButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      label: 'No')
+                                ],
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    Text(
+                                        'Do you want to cancel this order ? '),
+                                  ],
+                                ),
+                              );
+                            });
+
+
+
+                      },
                       child: Text('Delete Qoutation'),
                       style: ButtonStyle(
                           backgroundColor:
@@ -239,7 +306,7 @@ Card buildVendorCard(
           ),
           orderController.selectedOrder.vendor == vendorQouteModel.vendorid
               ? Text(
-                  'YOU HAVE CONFIRMED ${vendorModel.name}\n You will recieve a callback soon',
+                  'YOU HAVE CONFIRMED ${vendorModel.name}\n Waiting for vendor confirmation \n You will recieve a callback soon',
                   style: TextStyle(color: kgreen, fontSize: 24),
                   textAlign: TextAlign.center,
                 )
